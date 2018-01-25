@@ -1,0 +1,19 @@
+{
+  "apps": [
+    {
+      "name": "api",
+      "script": "./app.js",
+      "merge_logs": true,
+      "exec_interpreter": "node",
+      "exec_mode": "cluster_mode",
+      "max_restarts": 200,
+      "instances": 1,
+      "watch": true,
+      "max_memory_restart": "200M",
+      "env": {
+        "PORT": 3400,
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}

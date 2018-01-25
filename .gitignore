@@ -1,0 +1,6 @@
+*.pem
+node_modules
+yarn.lock
+
+#This should be enabled after project creation (please do not keep secrets in your repo)
+#backend/config.js

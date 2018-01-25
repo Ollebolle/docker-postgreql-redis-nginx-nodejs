@@ -1,0 +1,41 @@
+version: '2'
+services:
+  nginx:
+    build:
+      context: ./nginx/
+      dockerfile: Dockerfile_production
+    ports:
+      - "443:443"
+      - "80:80"
+    links:
+      - backend:backend
+    volumes:
+      - public:/public
+  backend:
+    build: ./backend
+    command: ["pm2", "start", "processes.json", "--no-daemon", "--watch"]
+    ports:
+      - "3400:3400"
+    volumes:
+      - ./backend:/app
+      - public:/public
+    links:
+      - postgres:postgres
+      - redis
+  postgres:
+    image: postgres
+    volumes:
+      - db_data:/pgdata
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=template_DB
+      - POSTGRES_USER=template_DB
+      - POSTGRES_PASSWORD=template_DB
+      - PGDATA=/pgdata
+  redis:
+    image: "redis:alpine"
+
+volumes:
+  db_data:
+  public:
